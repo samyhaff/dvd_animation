@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     dvd.x = rand() % (WIDTH - DVD_WIDTH);
     dvd.y = rand() % (HEIGHT - DVD_HEIGHT);
 
-    int directions[] = {-1, 1};
+    int directions[] = {-SPEED, SPEED};
     dvd.vx = directions[rand() % 2];
     dvd.vy = directions[rand() % 2];
 
@@ -24,20 +24,18 @@ int main(int argc, char *argv[])
     SDL_Renderer *renderer;
 
     window = SDL_CreateWindow("DVD", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0);
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     int done = 0;
     SDL_Event event;
 
     while (!done)
     {
-        done = processQuit(&event);
-
         updatePos(&dvd);
         
         render(renderer, dvd);
-                    
-        SDL_Delay(1);
+
+        done = processQuit(&event);
     }
 
     SDL_DestroyWindow(window);
