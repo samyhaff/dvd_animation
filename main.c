@@ -1,6 +1,8 @@
 #include <SDL2/SDL.h>
 #include "constants.h"
 #include "draw.h"
+#include "stdlib.h"
+#include "time.h"
 
 int processQuit(SDL_Event event) 
 {
@@ -27,6 +29,15 @@ int processQuit(SDL_Event event)
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
+
+    int x = rand() % (WIDTH - DVD_WIDTH);
+    int y = rand() % (HEIGHT - DVD_HEIGHT);
+
+    int directions[] = {-1, 1};
+    int vx = directions[rand() % 2];
+    int vy = directions[rand() % 2];
+
     SDL_Window *window;
     SDL_Renderer *renderer;
 
@@ -41,10 +52,13 @@ int main(int argc, char *argv[])
     while (!done)
     {
         done = processQuit(event);
+
+        x += vx;
+        y += vy;
         
-        render(renderer);
+        render(renderer, x, y);
                     
-        SDL_Delay(100);
+        SDL_Delay(10);
     }
 
     SDL_DestroyWindow(window);
