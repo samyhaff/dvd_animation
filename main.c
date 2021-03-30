@@ -1,4 +1,7 @@
+// TODO Change color when hitting border
+
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "constants.h"
 #include "draw.h"
 #include "stdlib.h"
@@ -20,11 +23,12 @@ int main(int argc, char *argv[])
     dvd.vx = directions[rand() % 2];
     dvd.vy = directions[rand() % 2];
 
-    SDL_Window *window;
-    SDL_Renderer *renderer;
+    SDL_Window *window = SDL_CreateWindow("DVD", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_Surface *dvdLogoSurface = IMG_Load("dvd_logo.png");
 
-    window = SDL_CreateWindow("DVD", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0);
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    dvd.dvdLogo = SDL_CreateTextureFromSurface(renderer, dvdLogoSurface);
+    SDL_FreeSurface(dvdLogoSurface);
 
     int done = 0;
     SDL_Event event;
@@ -32,12 +36,11 @@ int main(int argc, char *argv[])
     while (!done)
     {
         updatePos(&dvd);
-        
         render(renderer, dvd);
-
         done = processQuit(&event);
     }
 
+    SDL_DestroyTexture(dvd.dvdLogo);
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
 

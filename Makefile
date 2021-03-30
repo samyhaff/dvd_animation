@@ -1,6 +1,6 @@
 CC=gcc
 
-CXXFLAGS=-lSDL2
+CXXFLAGS=-lSDL2 -lSDL2_image
 
 all: main
 	./main
