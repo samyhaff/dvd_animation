@@ -14,5 +14,5 @@ main: main.o draw.o
 draw.o: draw.c constants.h
 	$(CC) $(CXXFLAGS) -c draw.c
 
-main.o: main.c constants.h
+main.o: main.c constants.h draw.h
 	$(CC) $(CXXFLAGS) -c main.c
