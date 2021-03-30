@@ -3,33 +3,13 @@
 #include "draw.h"
 #include "stdlib.h"
 #include "time.h"
-
-int processQuit(SDL_Event event) 
-{
-    while (SDL_PollEvent(&event)) 
-    {
-        switch (event.type) 
-        {
-            case SDL_QUIT:
-                return 1;
-            break;
-            case SDL_KEYDOWN:
-            {
-                switch (event.key.keysym.sym)
-                {
-                    case SDLK_ESCAPE:
-                        return 1;
-                    break;
-                }
-            }
-        }
-    }
-    return 0;
-}
+#include "logic.h"
+#include "input.h"
 
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
+    SDL_Init(SDL_INIT_VIDEO);
 
     int x = rand() % (WIDTH - DVD_WIDTH);
     int y = rand() % (HEIGHT - DVD_HEIGHT);
@@ -41,8 +21,6 @@ int main(int argc, char *argv[])
     SDL_Window *window;
     SDL_Renderer *renderer;
 
-    SDL_Init(SDL_INIT_VIDEO);
-
     window = SDL_CreateWindow("DVD", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
@@ -51,14 +29,13 @@ int main(int argc, char *argv[])
 
     while (!done)
     {
-        done = processQuit(event);
+        done = processQuit(&event);
 
-        x += vx;
-        y += vy;
+        updatePos(&x, &y, &vx, &vy);
         
         render(renderer, x, y);
                     
-        SDL_Delay(10);
+        SDL_Delay(1);
     }
 
     SDL_DestroyWindow(window);

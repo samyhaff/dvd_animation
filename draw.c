@@ -7,7 +7,7 @@ void render(SDL_Renderer *renderer, int x, int y)
     SDL_RenderClear(renderer);
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_Rect rect = {x, y, 100, 50};
+    SDL_Rect rect = {x, y, DVD_WIDTH, DVD_HEIGHT};
     SDL_RenderFillRect(renderer, &rect);
 
     SDL_RenderPresent(renderer);
