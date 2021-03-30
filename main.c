@@ -11,12 +11,14 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     SDL_Init(SDL_INIT_VIDEO);
 
-    int x = rand() % (WIDTH - DVD_WIDTH);
-    int y = rand() % (HEIGHT - DVD_HEIGHT);
+    DVD dvd;
+
+    dvd.x = rand() % (WIDTH - DVD_WIDTH);
+    dvd.y = rand() % (HEIGHT - DVD_HEIGHT);
 
     int directions[] = {-1, 1};
-    int vx = directions[rand() % 2];
-    int vy = directions[rand() % 2];
+    dvd.vx = directions[rand() % 2];
+    dvd.vy = directions[rand() % 2];
 
     SDL_Window *window;
     SDL_Renderer *renderer;
@@ -31,9 +33,9 @@ int main(int argc, char *argv[])
     {
         done = processQuit(&event);
 
-        updatePos(&x, &y, &vx, &vy);
+        updatePos(&dvd);
         
-        render(renderer, x, y);
+        render(renderer, dvd);
                     
         SDL_Delay(1);
     }

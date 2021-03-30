@@ -6,4 +6,10 @@
 #define DVD_WIDTH 300
 #define DVD_HEIGHT 140
 
+typedef struct DVD DVD;
+struct DVD
+{
+    int x, y, vx, vy;
+};
+
 #endif
